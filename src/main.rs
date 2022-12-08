@@ -6,6 +6,14 @@
 #![allow(non_camel_case_types)]
 #![allow(unused_parens)]
 
+pub mod external;
+pub mod ui;
+pub mod com;
+pub mod settings;
+pub mod logic;
+
 fn main() {
-    println!("Hello, world!");
+    let settings = settings::Settings::load();
+    let mut window = ui::window::Window::new();
+    window.run(settings);
 }
