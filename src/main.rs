@@ -14,6 +14,6 @@ pub mod logic;
 
 fn main() {
     let settings = settings::Settings::load();
-    let mut window = ui::window::Window::new();
-    window.run(settings);
+    let mut window = ui::window::EWindow::new(settings);
+    window.run();
 }

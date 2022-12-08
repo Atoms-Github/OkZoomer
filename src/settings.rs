@@ -3,11 +3,11 @@ use std::io::{Read, Write};
 use std::path::Path;
 use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct Settings{
     pub human : Human,
 }
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
 pub enum Human{
     Oberdiah,
     Atoms,

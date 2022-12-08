@@ -1,57 +1,41 @@
-
-pub struct Window{
-
-}
-impl Window{
-    pub fn new() -> Window{
-        Window{}
-    }
-    pub fn run(mut self, settings: Settings){
-        main();
-    }
-}
 use eframe::egui;
-use crate::settings::Settings;
+use crate::settings::{Human, Settings};
 
-fn main() {
+pub struct EWindow {
+    settings: Settings,
 
-    let options = eframe::NativeOptions {
-        initial_window_size: Some(egui::vec2(320.0, 240.0)),
-        ..Default::default()
-    };
-    eframe::run_native(
-        "My egui App",
-        options,
-        Box::new(|_cc| Box::new(MyApp::default())),
-    );
 }
-
-struct MyApp {
-    name: String,
-    age: u32,
-}
-
-impl Default for MyApp {
-    fn default() -> Self {
+impl EWindow {
+    pub fn new(settings: Settings) -> Self {
         Self {
-            name: "Arthur".to_owned(),
-            age: 42,
+            settings
         }
     }
-}
+    pub fn run(mut self){
+        let options = eframe::NativeOptions {
+            initial_window_size: Some(egui::vec2(320.0, 240.0)),
+            ..Default::default()
+        };
+        eframe::run_native(
+            "My egui App",
+            options,
+            Box::new(|_cc| Box::new(self)),
+        );
+    }
 
-impl eframe::App for MyApp {
+
+}
+impl eframe::App for EWindow {
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
         egui::CentralPanel::default().show(ctx, |ui| {
-            ui.heading("My egui Application");
-            ui.horizontal(|ui| {
-                let name_label = ui.label("Your name: ");
-            });
-            ui.add(egui::Slider::new(&mut self.age, 0..=120).text("age"));
-            if ui.button("Click each year").clicked() {
-                self.age += 1;
-            }
-            ui.label(format!("Hello '{}', age {}", self.name, self.age));
+            egui::ComboBox::from_label("Whom'stve?")
+                .selected_text(format!("{:?}", self.settings.human))
+                .show_ui(ui, |ui| {
+                    ui.selectable_value(&mut self.settings.human,  Human::Atoms, "Atoms");
+                    ui.selectable_value(&mut self.settings.human,  Human::Oberdiah, "Oberdiah");
+                    ui.selectable_value(&mut self.settings.human,  Human::QuickToast, "QuickToast");
+                }
+                );
         });
     }
 }

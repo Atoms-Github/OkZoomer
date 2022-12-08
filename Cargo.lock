@@ -3,16 +3,6 @@
 version = 3
 
 [[package]]
-name = "OkZoomer"
-version = "0.1.0"
-dependencies = [
- "eframe",
- "egui",
- "serde",
- "serde_json",
-]
-
-[[package]]
 name = "ab_glyph"
 version = "0.2.18"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1068,6 +1058,16 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "c92d4ddb4bd7b50d730c215ff871754d0da6b2178849f8a2a2ab69712d0c073b"
 dependencies = [
  "objc",
+]
+
+[[package]]
+name = "ok_zoomer"
+version = "0.1.0"
+dependencies = [
+ "eframe",
+ "egui",
+ "serde",
+ "serde_json",
 ]
 
 [[package]]
