@@ -28,14 +28,7 @@ impl EWindow {
 impl eframe::App for EWindow {
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
         egui::CentralPanel::default().show(ctx, |ui| {
-            egui::ComboBox::from_label("Whom'stve?")
-                .selected_text(format!("{:?}", self.settings.human))
-                .show_ui(ui, |ui| {
-                    ui.selectable_value(&mut self.settings.human,  Human::Atoms, "Atoms");
-                    ui.selectable_value(&mut self.settings.human,  Human::Oberdiah, "Oberdiah");
-                    ui.selectable_value(&mut self.settings.human,  Human::QuickToast, "QuickToast");
-                }
-                );
+            self.settings.draw(ui);
         });
     }
 }
