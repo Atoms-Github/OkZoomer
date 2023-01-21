@@ -1,4 +1,5 @@
 use eframe::egui;
+use egui::Event;
 use crate::logic::controller::Controller;
 use crate::logic::view::View;
 use crate::settings::{Human, Settings};
@@ -7,6 +8,7 @@ pub struct EWindow {
     settings: Settings,
     controller: Controller,
     views: Vec<View>,
+    focused_view: usize,
 }
 impl EWindow {
     pub fn new(settings: Settings) -> Self {
@@ -17,7 +19,8 @@ impl EWindow {
         Self {
             settings,
             controller: Controller::default(),
-            views
+            views,
+            focused_view: 0
         }
     }
     pub fn run(mut self){
@@ -36,9 +39,22 @@ impl eframe::App for EWindow {
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
         egui::CentralPanel::default().show(ctx, |ui| {
             self.settings.draw(ui);
-            for view in self.views.iter_mut(){
-                view.draw(ui);
+            for (i, view) in self.views.iter_mut().enumerate(){
+                if view.draw(ui){
+                    self.focused_view = i;
+                }
             }
+            for event in &ui.input().events{
+                match event {
+                    Event::Key{key, pressed, modifiers} => {
+                        if *pressed{
+                            self.views[self.focused_view].on_key(key);
+                        }
+                    },
+                    _ => {}
+                }
+            }
+
         });
     }
 }
