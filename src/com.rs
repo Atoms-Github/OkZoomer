@@ -1,4 +1,4 @@
-use std::path::Path;
+use std::path::{Path, PathBuf};
 
-pub type Pat = Box<Path>;
+pub type Pat = PathBuf;
 pub type Col = egui::Color32;
