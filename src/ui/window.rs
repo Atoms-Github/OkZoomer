@@ -1,5 +1,5 @@
 use eframe::egui;
-use egui::Event;
+use egui::{Event, Key};
 use crate::logic::controller::Controller;
 use crate::logic::view::View;
 use crate::settings::{Human, Settings};
@@ -9,6 +9,7 @@ pub struct EWindow {
     controller: Controller,
     views: Vec<View>,
     focused_view: usize,
+
 }
 impl EWindow {
     pub fn new(settings: Settings) -> Self {
@@ -49,6 +50,17 @@ impl eframe::App for EWindow {
                     Event::Key{key, pressed, modifiers} => {
                         if *pressed{
                             self.views[self.focused_view].on_key(key);
+                            let new_focus = match &key{
+                                Key::R => 0,
+                                Key::S => 1,
+                                Key::T => 2,
+                                Key::N => 3,
+                                _ => {500}
+                            };
+                            if new_focus < 4{
+                                self.focused_view = new_focus;
+                            }
+
                         }
                     },
                     _ => {}

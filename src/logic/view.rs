@@ -68,29 +68,19 @@ impl View{
     }
     pub fn on_key(&mut self, key: &Key){
         let vertical = match key{
-            Key::ArrowUp => -1,
-            Key::ArrowDown => 1,
+            Key::I => -1,
+            Key::E => 1,
             _ => 0
         };
         let horizontal = match key{
-            Key::ArrowLeft => -1,
-            Key::ArrowRight => 1,
+            Key::O => -1,
+            Key::D => 1,
             _ => 0
         };
-        let mut new_index = self.selected_index + vertical * VIEW_COLUMNS + horizontal;
-        if new_index < 0{
-            new_index = 0;
-        }
-if new_index >= self.root_dir.get_files().len() as i32{
-            new_index = self.root_dir.get_files().len() as i32 - 1;
-        }
-
-        self.selected_index = new_index;
+        self.selected_index += vertical * VIEW_COLUMNS + horizontal;
 
 
-
-
-
+        self.selected_index = self.selected_index.rem_euclid(self.root_dir.get_files().len() as i32);
     }
     pub fn navigate(&mut self, path: Pat){
         todo!()
